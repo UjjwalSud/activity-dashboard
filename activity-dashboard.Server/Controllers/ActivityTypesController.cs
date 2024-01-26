@@ -12,8 +12,7 @@ namespace activity_dashboard.Server.Controllers
     {
         private IActivityTypeService _activityTypeService;
         public ActivityTypesController(
-          IActivityTypeService  activityTypeService,
-          ICurrentUserService currentUserService
+          IActivityTypeService  activityTypeService
            )
         {
             _activityTypeService = activityTypeService;

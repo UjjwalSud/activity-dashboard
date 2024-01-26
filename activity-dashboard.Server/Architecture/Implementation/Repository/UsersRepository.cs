@@ -31,5 +31,10 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
             return usersData.SingleOrDefault(x => x.UserName.ToLower() == tokenRequest.Email.ToLower()
             && x.Password == tokenRequest.Password);
         }
+
+        public List<Users> GetAllUsers()
+        {
+            return usersData;
+        }
     }
 }

@@ -88,11 +88,16 @@ builder.Services.AddSwaggerGen(async c =>
                 });
 });
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
 builder.Services.AddTransient<IUsersService, UsersService>();
+builder.Services.AddTransient<IActivityTypeService, ActivityTypeService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
+
 builder.Services.AddTransient<IUserRepository, UsersRepository>();
 builder.Services.AddTransient<IActivityTypeRepository, ActivityTypeRepository>();
-builder.Services.AddTransient<IActivityTypeService, ActivityTypeService>();
-builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
 
 
 var app = builder.Build();

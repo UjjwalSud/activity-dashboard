@@ -6,5 +6,7 @@ namespace activity_dashboard.Server.Architecture.Interfaces.IRepository
     public interface IUserRepository
     {
         Users UserLogin(TokenRequest tokenRequest);
+
+        List<Users> GetAllUsers();
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace activity_dashboard.Server.Architecture.Interfaces.IRepository
+﻿using activity_dashboard.Server.Architecture.Responses;
+
+namespace activity_dashboard.Server.Architecture.Interfaces.IRepository
 {
     public interface IActivityTypeRepository
     {
-        List<DbModels.ActivityTypes> GetAllActiveActivityTypes();
+        List<ActivityTypesResponse> GetAllActiveActivityTypes();
     }
 }
