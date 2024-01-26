@@ -15,7 +15,7 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
                 ActivityTypes.Add(new ActivityTypes
                 {
                     Id = 1,
-                    ActivityName = "A",
+                    ActivityName = "ON BREAK",
                     ActivityDescription = "",
                     IsActive = true,
                     ButtonCss = "btn-primary",
@@ -23,7 +23,7 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
                 ActivityTypes.Add(new ActivityTypes
                 {
                     Id = 2,
-                    ActivityName = "B",
+                    ActivityName = "ON CALL",
                     ActivityDescription = "",
                     IsActive = true,
                     ButtonCss = "btn-secondary",
@@ -31,7 +31,7 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
                 ActivityTypes.Add(new ActivityTypes
                 {
                     Id = 3,
-                    ActivityName = "C",
+                    ActivityName = "IN MEETING",
                     ActivityDescription = "",
                     IsActive = true,
                     ButtonCss = "btn-success",
@@ -39,7 +39,7 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
                 ActivityTypes.Add(new ActivityTypes
                 {
                     Id = 3,
-                    ActivityName = "D",
+                    ActivityName = "NO TASK",
                     ActivityDescription = "",
                     IsActive = false,
                     ButtonCss = "btn-primary",

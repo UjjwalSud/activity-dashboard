@@ -19,6 +19,8 @@ const Dashboard: React.FC = () => {
 
   const [currentActivityTypeId, setCurrentActivityTypeId] = useState<number>(0);
   const [currentActivityId, setCurrentActivityId] = useState<string>("");
+  const [userStartedActivityCalled, setUserStartedActivityCalled] =
+    useState<boolean>(false);
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -27,6 +29,13 @@ const Dashboard: React.FC = () => {
     }
     getActivityTypes();
   }, []);
+
+  useEffect(() => {
+    debugger;
+    if (!userStartedActivityCalled && activityTypes) {
+      getUserStartedActivity();
+    }
+  }, [activityTypes]);
 
   const handleLogoutClick = () => {
     removeAuthTokenKey();
@@ -37,9 +46,6 @@ const Dashboard: React.FC = () => {
     makeGetRequest("activity-type/get-all")
       .then((data) => {
         setActivityTypes(data.data);
-        setTimeout(() => {
-          getUserStartedActivity();
-        }, 2000);
       })
       .catch((error) => {
         setError(error.message);
@@ -47,6 +53,7 @@ const Dashboard: React.FC = () => {
   };
 
   const getUserStartedActivity = () => {
+    debugger;
     makeGetRequest("activity/get-user-started-activity")
       .then((data) => {
         const typeCastedData = data.data as activityResponse;
@@ -66,6 +73,7 @@ const Dashboard: React.FC = () => {
       .catch((error) => {
         setError(error.message);
       });
+    setUserStartedActivityCalled(true);
   };
 
   const handleActivityTypeClick = (type: activityTypesResponse) => {
@@ -129,10 +137,14 @@ const Dashboard: React.FC = () => {
               key={activityType.id}
               disabled={activityType.isDisabled}
               onClick={() => handleActivityTypeClick(activityType)}
-              className={`btn ${activityType.buttonCss} mx-2`}
+              className={`btn ${activityType.buttonCss} mx-2 ${
+                activityType.id === currentActivityTypeId
+                  ? "glowing-button"
+                  : ""
+              } `}
             >
               {activityType.id === currentActivityTypeId ? "Stop" : "Start"}
-              &nbsp; {activityType.activityName}
+              &nbsp; '{activityType.activityName}'
             </button>
           ))}
       </div>
