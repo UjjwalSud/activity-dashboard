@@ -1,8 +1,7 @@
-﻿using activity_dashboard.Server.Architecture.Requests;
+﻿using activity_dashboard.Server.Architecture.Interfaces.IRepository;
+using activity_dashboard.Server.Architecture.Interfaces.IServices;
+using activity_dashboard.Server.Architecture.Requests;
 using activity_dashboard.Server.Architecture.Responses;
-using activity_dashboard.Server.Architecture.Services.IRepository;
-using activity_dashboard.Server.Architecture.Services.IServices;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,12 +9,12 @@ using System.Text;
 
 namespace activity_dashboard.Server.Architecture.Implementation.Services
 {
-    public class LoginService : ILoginService
+    public class UsersService : IUsersService
     {
         IUserRepository _userRepository;
         IConfiguration _configuration;
 
-        public LoginService(IUserRepository userRepository, IConfiguration configuration)
+        public UsersService(IUserRepository userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _configuration = configuration;

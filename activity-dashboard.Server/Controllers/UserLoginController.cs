@@ -1,25 +1,25 @@
-﻿using activity_dashboard.Server.Architecture.Requests;
-using activity_dashboard.Server.Architecture.Services.IServices;
+﻿using activity_dashboard.Server.Architecture.Interfaces.IServices;
+using activity_dashboard.Server.Architecture.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace activity_dashboard.Server.Controllers
 {
     [ApiController]
-    [Route("api/user/login")]
+    [Route("api/user")]
     public class UserLoginController : ControllerBase
     {
-        private ILoginService _identityService;
+        private IUsersService _userService;
         public UserLoginController(
-          ILoginService identityService
+          IUsersService userService
            )
         {
-            _identityService = identityService;
+            _userService = userService;
         }
 
         [HttpPost("login")]
         public ActionResult UserLogin([FromBody] TokenRequest model)
         {
-            var response = _identityService.LoginAsync(model);
+            var response = _userService.LoginAsync(model);
             if (response.isSuccessful)
             {
                 return Ok(response);
