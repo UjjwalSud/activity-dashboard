@@ -15,12 +15,13 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
         static UsersRepository()
         {
             usersData = new List<Users>();
-            for (int i = 0; i <= 10; i++)
+            for (int i = 1; i <= 10; i++)
             {
                 usersData.Add(new Users
                 {
+                    Id = i,
                     UserName = "User_" + i,
-                    Password = "Password_" + 1,
+                    Password = "Password_" + i,
                     Name = randomNames[new Random().Next(randomNames.Length)]
                 });
             }

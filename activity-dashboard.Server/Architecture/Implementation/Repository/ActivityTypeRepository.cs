@@ -12,19 +12,48 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
             if (ActivityTypes == null)
             {
                 ActivityTypes = [];
-                ActivityTypes.Add(new ActivityTypes { Id = 1, ActivityName = "A", ActivityDescription = "", IsActive = true });
-                ActivityTypes.Add(new ActivityTypes { Id = 2, ActivityName = "B", ActivityDescription = "", IsActive = true });
-                ActivityTypes.Add(new ActivityTypes { Id = 3, ActivityName = "C", ActivityDescription = "", IsActive = true });
-                ActivityTypes.Add(new ActivityTypes { Id = 3, ActivityName = "D", ActivityDescription = "", IsActive = false });
+                ActivityTypes.Add(new ActivityTypes
+                {
+                    Id = 1,
+                    ActivityName = "A",
+                    ActivityDescription = "",
+                    IsActive = true,
+                    ButtonCss = "btn-primary",
+                });
+                ActivityTypes.Add(new ActivityTypes
+                {
+                    Id = 2,
+                    ActivityName = "B",
+                    ActivityDescription = "",
+                    IsActive = true,
+                    ButtonCss = "btn-secondary",
+                });
+                ActivityTypes.Add(new ActivityTypes
+                {
+                    Id = 3,
+                    ActivityName = "C",
+                    ActivityDescription = "",
+                    IsActive = true,
+                    ButtonCss = "btn-success",
+                });
+                ActivityTypes.Add(new ActivityTypes
+                {
+                    Id = 3,
+                    ActivityName = "D",
+                    ActivityDescription = "",
+                    IsActive = false,
+                    ButtonCss = "btn-primary",
+                });
             }
         }
         public List<ActivityTypesResponse> GetAllActiveActivityTypes()
         {
             return ActivityTypes.Where(x => x.IsActive).Select(x => new ActivityTypesResponse
             {
-                 Id = x.Id,
-                 ActivityName = x.ActivityName,
-                 ActivityDescription = x.ActivityDescription,
+                Id = x.Id,
+                ActivityName = x.ActivityName,
+                ActivityDescription = x.ActivityDescription,
+                ButtonCss = x.ButtonCss,
             }).ToList();
         }
     }

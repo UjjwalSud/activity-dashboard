@@ -9,7 +9,7 @@ namespace activity_dashboard.Server.Architecture.Interfaces.IRepository
 
         bool EndActivity(EndActivityRequest endActivityRequest, int userId);
 
-        List<GetAllActivityResponse> GetAllActivity();
+        List<GetAllActivityResponse> GetStartedActivities();
 
     }
 }

@@ -6,5 +6,6 @@
         public string ActivityName {  get; set; }
         public string ActivityDescription { get; set; }
         public bool IsActive { get; set; }
+        public string ButtonCss { get; internal set; }
     }
 }

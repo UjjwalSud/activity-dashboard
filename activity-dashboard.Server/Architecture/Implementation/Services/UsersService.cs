@@ -25,7 +25,7 @@ namespace activity_dashboard.Server.Architecture.Implementation.Services
             var user = _userRepository.UserLogin(model);
             if (user == null)
             {
-                return new ReturnResponse { isSuccessful = false, Message = "Please enter login details" };
+                return new ReturnResponse { isSuccessful = false, Message = "Please enter valid login details" };
             }
             return new ReturnResponse { isSuccessful = true, Data = GenerateJwtToken(user.UserName, user.Id) };
         }

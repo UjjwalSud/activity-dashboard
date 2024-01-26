@@ -7,6 +7,8 @@ namespace activity_dashboard.Server.Architecture.Interfaces.IServices
     {
         ReturnResponse StartActivity(StartActivityRequest startActivityRequest);
         ReturnResponse EndActivity(EndActivityRequest endActivityRequest);
-        ReturnResponse GetAllActivity();
+        ReturnResponse GetStartedActivities();
+
+        ReturnResponse GetUserStartedActivity();
     }
 }

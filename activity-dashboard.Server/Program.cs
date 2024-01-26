@@ -98,7 +98,13 @@ builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddTransient<IUserRepository, UsersRepository>();
 builder.Services.AddTransient<IActivityTypeRepository, ActivityTypeRepository>();
 builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.WithOrigins("*") 
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
 
 var app = builder.Build();
 
@@ -123,7 +129,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllowAll");
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");

@@ -23,15 +23,28 @@ namespace activity_dashboard.Server.Controllers
         [HttpGet("get-all")]
         public IActionResult GetAllActivities()
         {
-            var response = _activityService.GetAllActivity();
+            var response = _activityService.GetStartedActivities();
             return Ok(response);
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet("start")]
-        public IActionResult StartActivity(StartActivityRequest startActivityRequest)
+        [HttpGet("get-user-started-activity")]
+        public IActionResult GetUserStartedActivity()
+        {
+            var response = _activityService.GetUserStartedActivity();
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("start")]
+        public IActionResult StartActivity([FromBody] StartActivityRequest startActivityRequest)
         {
             var response = _activityService.StartActivity(startActivityRequest);
             if (response.isSuccessful)
@@ -45,8 +58,8 @@ namespace activity_dashboard.Server.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet("end")]
-        public IActionResult EndActivity(EndActivityRequest endActivityRequest)
+        [HttpPost("end")]
+        public IActionResult EndActivity([FromBody] EndActivityRequest endActivityRequest)
         {
             var response = _activityService.EndActivity(endActivityRequest);
             if (response.isSuccessful)

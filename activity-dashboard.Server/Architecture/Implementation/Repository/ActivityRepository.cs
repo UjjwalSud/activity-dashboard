@@ -44,10 +44,11 @@ namespace activity_dashboard.Server.Architecture.Implementation.Repository
             return false;
         }
 
-        public List<GetAllActivityResponse> GetAllActivity()
+        public List<GetAllActivityResponse> GetStartedActivities()
         {
-            return UserActivities.Select(x => new GetAllActivityResponse
+            return UserActivities.Where(x => x.ActivityStatus == Enums.ActivityStatus.Started).Select(x => new GetAllActivityResponse
             {
+                ActivityId = x.Id,
                 ActivityTypeId = x.ActivityTypeId,
                 UserId = x.UserId,
                 UserDetails = "",

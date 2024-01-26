@@ -4,6 +4,7 @@ namespace activity_dashboard.Server.Architecture.Responses
 {
     public class GetAllActivityResponse
     {
+        public Guid ActivityId { get; set; }
         public int ActivityTypeId { get; set; }
 
         [JsonIgnore]
@@ -13,5 +14,6 @@ namespace activity_dashboard.Server.Architecture.Responses
         public DateTime ActivityStartedAt { get; set; }
         public DateTime? ActivityEndedAt { get; set;}
         public Enums.ActivityStatus ActivityStatus { get; set; }
+
     }
 }

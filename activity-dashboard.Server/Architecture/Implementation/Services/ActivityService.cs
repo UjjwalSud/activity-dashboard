@@ -41,9 +41,9 @@ namespace activity_dashboard.Server.Architecture.Implementation.Services
             return new ReturnResponse { isSuccessful = false, Message = "Either activity already ended or dose not exists" };
         }
 
-        public ReturnResponse GetAllActivity()
+        public ReturnResponse GetStartedActivities()
         {
-            var result = _activityRepository.GetAllActivity();
+            var result = _activityRepository.GetStartedActivities();
             if (result.Count > 0)
             {
                 var activityTypes = _activityTypeRepository.GetAllActiveActivityTypes();
@@ -53,6 +53,23 @@ namespace activity_dashboard.Server.Architecture.Implementation.Services
                     a.ActivityName = activityTypes.Single(x => x.Id == a.ActivityTypeId).ActivityName;
                     a.UserDetails = users.Where(x => x.Id == a.UserId).Select(y => y.Name + " (" + y.Name + ")").Single();
                 });
+            }
+            return new ReturnResponse { Data = result, isSuccessful = true };
+        }
+
+        public ReturnResponse GetUserStartedActivity()
+        {
+            var result = _activityRepository.GetStartedActivities().FirstOrDefault(x => x.UserId == _currentUserService.UserId);
+            if (result != null)
+            {
+                var activityTypes = _activityTypeRepository.GetAllActiveActivityTypes();
+                var users = _userRepository.GetAllUsers();
+                result.ActivityName = activityTypes.Single(x => x.Id == result.ActivityTypeId).ActivityName;
+                result.UserDetails = users.Where(x => x.Id == result.UserId).Select(y => y.Name + " (" + y.Name + ")").Single();
+            }
+            else
+            {
+                result = new GetAllActivityResponse();
             }
             return new ReturnResponse { Data = result, isSuccessful = true };
         }
