@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { makeGetRequest } from "../services/httpRequestService";
 import { activityResponse } from "../interfaces/returnResponse";
+import {
+  registerReceiveDataHandler,
+  startConnection,
+} from "../services/signalrService";
 
 const ViewAdtivityLogs: React.FC = () => {
   const [runningActivities, setRunningActivities] =
     useState<activityResponse[]>();
-  useEffect(() => {
+
+  const bindRunningActivity = () => {
     makeGetRequest("activity/get-all")
       .then((data) => {
         setRunningActivities(data.data);
       })
       .catch((error) => {});
+  };
+
+  useEffect(() => {
+    bindRunningActivity();
+    startConnection(); // Connect to SignalR hub when component mounts
+
+    // Register handler for receiving messages
+    registerReceiveDataHandler(() => {
+      bindRunningActivity();
+      // Update state or perform other actions...
+    });
   }, []);
   return (
     <div className="d-flex align-items-center justify-content-center vh-100">
