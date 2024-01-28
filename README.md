@@ -13,5 +13,3 @@
 - **Folder Responses:** Contains classes serving as view models for outgoing responses.
 - **Folder Controllers:** Contains all controllers.
 - **Folder Hubs:** Houses SignalR setup.
-
-Feel free to expand on each section as necessary and add any additional information or instructions.
