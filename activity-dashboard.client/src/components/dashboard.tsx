@@ -10,7 +10,7 @@ import {
   activityResponse,
   activityTypesResponse,
 } from "../interfaces/returnResponse";
-import ViewAdtivityLogs from "./viewAdtivityLogs";
+import ViewRunningActivities from "./viewRunningActivities";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -147,7 +147,7 @@ const Dashboard: React.FC = () => {
             </button>
           ))}
       </>
-      <ViewAdtivityLogs />
+      <ViewRunningActivities />
       {error && (
         <div className="row">
           <div className="col-12">

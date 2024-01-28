@@ -6,26 +6,24 @@ import {
   startConnection,
 } from "../services/signalrService";
 
-const ViewAdtivityLogs: React.FC = () => {
+const ViewRunningActivities: React.FC = () => {
   const [runningActivities, setRunningActivities] =
     useState<activityResponse[]>();
 
   const bindRunningActivity = () => {
-    makeGetRequest("activity/get-all")
-      .then((data) => {
-        setRunningActivities(data.data);
-      })
-      .catch((error) => {});
+    makeGetRequest("activity/get-all-active-activities").then((data) => {
+      setRunningActivities(data.data);
+    });
   };
 
   useEffect(() => {
     bindRunningActivity();
+
     startConnection(); // Connect to SignalR hub when component mounts
 
     // Register handler for receiving messages
     registerReceiveDataHandler(() => {
       bindRunningActivity();
-      // Update state or perform other actions...
     });
   }, []);
   return (
@@ -70,4 +68,4 @@ const ViewAdtivityLogs: React.FC = () => {
   );
 };
 
-export default ViewAdtivityLogs;
+export default ViewRunningActivities;

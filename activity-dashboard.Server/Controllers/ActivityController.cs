@@ -25,7 +25,7 @@ namespace activity_dashboard.Server.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet("get-all")]
+        [HttpGet("get-all-active-activities")]
         public IActionResult GetAllActivities()
         {
             var response = _activityService.GetStartedActivities();
