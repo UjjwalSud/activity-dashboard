@@ -1,7 +1,9 @@
 ﻿using activity_dashboard.Server.Architecture.Interfaces.IServices;
 using activity_dashboard.Server.Architecture.Requests;
+using activity_dashboard.Server.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace activity_dashboard.Server.Controllers
 {
@@ -11,11 +13,14 @@ namespace activity_dashboard.Server.Controllers
     public class ActivityController : ControllerBase
     {
         IActivityService _activityService;
-        public ActivityController(IActivityService activityService)
+
+        private readonly IHubContext<ActivityHub> _hubContext;
+        public ActivityController(IActivityService activityService, 
+            IHubContext<ActivityHub> hubContext)
         {
             _activityService = activityService;
+            _hubContext = hubContext;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -26,7 +31,6 @@ namespace activity_dashboard.Server.Controllers
             var response = _activityService.GetStartedActivities();
             return Ok(response);
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -37,37 +41,36 @@ namespace activity_dashboard.Server.Controllers
             var response = _activityService.GetUserStartedActivity();
             return Ok(response);
         }
-
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [HttpPost("start")]
-        public IActionResult StartActivity([FromBody] StartActivityRequest startActivityRequest)
+        public async Task<IActionResult> StartActivity([FromBody] StartActivityRequest startActivityRequest)
         {
             var response = _activityService.StartActivity(startActivityRequest);
             if (response.isSuccessful)
             {
+                await _hubContext.Clients.All.SendAsync("RefreshGrid");
                 return Ok(response);
             }
             return StatusCode(403, response);
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         [HttpPost("end")]
-        public IActionResult EndActivity([FromBody] EndActivityRequest endActivityRequest)
+        public async Task<IActionResult> EndActivity([FromBody] EndActivityRequest endActivityRequest)
         {
             var response = _activityService.EndActivity(endActivityRequest);
             if (response.isSuccessful)
             {
+                await _hubContext.Clients.All.SendAsync("RefreshGrid");
                 return Ok(response);
             }
             return StatusCode(403, response);
-        }
+        }        
 
     }
 }

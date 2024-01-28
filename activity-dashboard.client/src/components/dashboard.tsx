@@ -10,6 +10,7 @@ import {
   activityResponse,
   activityTypesResponse,
 } from "../interfaces/returnResponse";
+import ViewAdtivityLogs from "./viewAdtivityLogs";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ const Dashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    debugger;
     if (!userStartedActivityCalled && activityTypes) {
       getUserStartedActivity();
     }
@@ -53,7 +53,6 @@ const Dashboard: React.FC = () => {
   };
 
   const getUserStartedActivity = () => {
-    debugger;
     makeGetRequest("activity/get-user-started-activity")
       .then((data) => {
         const typeCastedData = data.data as activityResponse;
@@ -124,13 +123,13 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid mt-5">
       <div className="logout-btn-container">
         <button className="btn btn-danger" onClick={handleLogoutClick}>
           Logout
         </button>
       </div>
-      <div className="buttons-container">
+      <>
         {activityTypes &&
           activityTypes.map((activityType) => (
             <button
@@ -147,7 +146,8 @@ const Dashboard: React.FC = () => {
               &nbsp; '{activityType.activityName}'
             </button>
           ))}
-      </div>
+      </>
+      <ViewAdtivityLogs />
       {error && (
         <div className="row">
           <div className="col-12">

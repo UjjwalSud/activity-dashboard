@@ -3,6 +3,7 @@ using activity_dashboard.Server.Architecture.Implementation.Services;
 using activity_dashboard.Server.Architecture.Interfaces.IRepository;
 using activity_dashboard.Server.Architecture.Interfaces.IServices;
 using activity_dashboard.Server.Architecture.Middleware;
+using activity_dashboard.Server.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -10,10 +11,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration configuration = builder.Configuration;
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSignalR();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(x =>
@@ -35,7 +35,6 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddSwaggerGen(async c =>
 {
-    // include all project's xml comments
     var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
     foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
     {
@@ -49,7 +48,6 @@ builder.Services.AddSwaggerGen(async c =>
             }
         }
     }
-
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
@@ -87,6 +85,7 @@ builder.Services.AddSwaggerGen(async c =>
                     },
                 });
 });
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
@@ -98,6 +97,7 @@ builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddTransient<IUserRepository, UsersRepository>();
 builder.Services.AddTransient<IActivityTypeRepository, ActivityTypeRepository>();
 builder.Services.AddTransient<IActivityRepository, ActivityRepository>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -111,12 +111,7 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseJwtTokenMiddleware();
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
@@ -128,9 +123,17 @@ app.UseSwaggerUI(options =>
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-app.UseAuthorization();
+
 app.UseCors("AllowAll");
-app.MapControllers();
+//app.MapControllers();
+
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ActivityHub>("/ActivityHub"); // Map the SignalR hub
+});
 
 app.MapFallbackToFile("/index.html");
 
