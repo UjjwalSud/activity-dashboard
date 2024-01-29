@@ -14,8 +14,6 @@
 - **Folder Controllers:** Contains all controllers.
 - **Folder Hubs:** Houses SignalR setup.
 
-Certainly! Here's a revised version suitable for a GitHub README file:
-
 ---
 
 **Login Credentials:**
