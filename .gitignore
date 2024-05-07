@@ -5,3 +5,5 @@
 /.vs
 /activity-dashboard.Server/bin/Debug
 /activity-dashboard.Server/obj
+config.bat
+node_modules
